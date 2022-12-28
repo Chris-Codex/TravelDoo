@@ -11,19 +11,19 @@ import * as Animatable from "react-native-animatable";
 import { HeroImage } from "../assets";
 
 const HomeScreen = () => {
-  const navigate = useNavigation();
+  const navigation = useNavigation();
 
   useLayoutEffect(() => {
-    navigate.setOptions({
+    navigation.setOptions({
       headerShown: false,
     });
   }, []);
 
   return (
     <SafeAreaView className="bg-white flex-1 relative">
-      <View className="flex-row -[full] m-5 space-x-2 items-center">
+      <View className="flex-row w-[full] m-5 space-x-2 items-center">
         <View className="bg-[#000] w-[50px] h-[50px] rounded-full items-center justify-center">
-          <Text className="text-[#fff] font-bold text-[20px] text-[#2bb2ae] items-center text-center">
+          <Text className="font-bold text-[20px] text-[#2bb2ae] items-center text-center">
             Go
           </Text>
         </View>
@@ -53,6 +53,20 @@ const HomeScreen = () => {
           className="bottom-[460px] w-[370px] h-[450px] "
         />
       </View>
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Discoveries")}
+        className="absolute w-[80px] h-[80px] bottom-[60px] border-t-2 border-r-2 border-l-2 border-[#2bb2ae] ml-[135px] mr-[135px] rounded-full items-center justify-center"
+      >
+        <Animatable.View
+          animation="pulse"
+          easing="ease-in-out"
+          iterationCount={"infinite"}
+          className="absolute w-[70px] h-[70px]  bg-[#2bb2ae] ml-[135px] mr-[135px] rounded-full items-center justify-center"
+        >
+          <Text className="font-bold text-[20px]">Go</Text>
+        </Animatable.View>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
