@@ -14,6 +14,10 @@ const Discoveries = () => {
   const [type, setType] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [mainData, setMainData] = useState([])
+  const [bl_lat, setBl_Lat] = useState(null)
+  const [bl_lng, setBl_Lng] = useState(null)
+  const [tr_lat, setTr_Lat] = useState(null)
+  const [tr_lng, setTr_lng] = useState(null)
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -23,13 +27,13 @@ const Discoveries = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    getPlacesData().then(data => {
+    getPlacesData(bl_lat, bl_lng, tr_lat, tr_lng, type).then(data => {
       setMainData(data)
       setInterval(() => [
         setIsLoading(false)
       ], 2000)
     })
-  }, [])
+  }, [bl_lat, bl_lng, tr_lat, tr_lng, type])
 
   return (
     <SafeAreaView className="flex-1 bg-white relative">
@@ -55,6 +59,10 @@ const Discoveries = () => {
           onPress={(data, details = null) => {
             // 'details' is provided when fetchDetails = true
             console.log(details?.geometry?.viewport);
+            setBl_Lat(details?.geometry?.viewport?.southwest?.lat)
+            setBl_Lng(details?.geometry?.viewport?.southwest?.lng)
+            setTr_Lat(details?.geometry?.viewport?.northeast?.lat)
+            setTr_lng(details?.geometry?.viewport?.northeast?.lng)
           }}
           query={{
 
@@ -69,14 +77,14 @@ const Discoveries = () => {
         </View> :
         <ScrollView>
           <View className="flex-row items-center justify-between px-8 mt-3">
-            <NavContainer key={"hotel"} title="Hotels" imageSrc={Hotels} type={type} setType={setType} />
-            <NavContainer key={"attraction"} title="Attraction" imageSrc={Attractions} type={type} setType={setType} />
-            <NavContainer key={"restaurant"} title="Restaurants" imageSrc={Restaurants} type={type} setType={setType} />
+            <NavContainer key={"hotels"} title="Hotels" imageSrc={Hotels} type={type} setType={setType} />
+            <NavContainer key={"attractions"} title="Attractions " imageSrc={Attractions} type={type} setType={setType} />
+            <NavContainer key={"restaurants"} title="Restaurants" imageSrc={Restaurants} type={type} setType={setType} />
           </View>
 
           <View>
             <View className="flex-row w-[340px] ml-5  mr-5 mt-7 items-center justify-between">
-              <Text className="font-bold text-[20px] text-[#346c6a]">Top Tips</Text>
+              <Text className="font-bold text-[17px] text-[#346c6a]">Top Tips</Text>
               <TouchableOpacity className="flex-row space-x-1">
                 <Text className="text-[#5c7877] font-semibold">Explore</Text>
                 <Text className="text-[#5c7877] font-semibold"><FontAwesome name="long-arrow-right" size={18} color="#5c7877" /></Text>

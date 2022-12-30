@@ -6,6 +6,9 @@ import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+
 
 const ItemScreen = ({ route }) => {
     const navigation = useNavigation();
@@ -32,6 +35,7 @@ const ItemScreen = ({ route }) => {
                             className="w-full h-52 object-cover rounded-2xl"
                         />
 
+                        {/*Large image Card*/}
                         <View className="absolute flex-row inset-x-0 top-5 justify-between px-6">
                             <TouchableOpacity onPress={() => navigation.navigate("Discoveries")} className="w-10 h-10 rounded-md items-center justify-center bg-white">
                                 <AntDesign name="left" size={20} color="#2bb2ae" />
@@ -48,9 +52,12 @@ const ItemScreen = ({ route }) => {
                                     <Text className="text-[#2bb2ae] shadow-lg text-[12px]">{data?.price}</Text>
                                 </View>
                             }
-                            <View className="w-20 h-5 rounded-md items-center justify-center bg-[#2bb2ae] shadow-md">
-                                <Text className="text-[#fff] shadow-lg text-[12px] font-bold">{data?.open_now_text}</Text>
-                            </View>
+
+                            {data?.open_now_text &&
+                                <View className="w-20 h-5 rounded-md items-center justify-center bg-[#2bb2ae] shadow-md">
+                                    <Text className="text-[#fff] shadow-lg text-[12px] font-bold">{data?.open_now_text}</Text>
+                                </View>
+                            }
                         </View>
                     </View>
 
@@ -98,10 +105,46 @@ const ItemScreen = ({ route }) => {
                         </View>
                     </View>
 
-
+                    {/*Description*/}
                     <View className='mt-3'>
                         <Text className="text-[#5c7877] text-[11px]">{data?.description}</Text>
                     </View>
+
+                    {/*Cousins*/}
+                    {data?.cuisine &&
+                        <View className="flex-row flex-wrap items-center justify-start py-3 gap-2">
+                            {data?.cuisine.map((n) => {
+                                return (
+                                    <TouchableOpacity key={n.key} className="px-2 py-1 rounded-md bg-emerald-100">
+                                        <Text className="text-[10px]">{n.name}</Text>
+                                    </TouchableOpacity>
+                                )
+                            })}
+                        </View>
+                    }
+
+                    <View className="w-full rounded-lg shadow-md pb-2 bg-[#e8e4e49c]">
+                        <View>
+                            <View className="flex-row mx-3 mt-2 py-1 space-x-2">
+                                <Feather name="phone" size={14} color="#5c7877" />
+                                <Text className="text-[#5c7877] text-[12px]">{data?.phone}</Text>
+                            </View>
+                            <View className="flex-row mx-3 mt-1 py-0 space-x-2">
+                                <MaterialIcons name="attach-email" size={14} color="#5c7877" />
+                                <Text className="text-[#5c7877] text-[12px]">{data?.email}</Text>
+                            </View>
+                            <View className="flex-row mx-3 mt-1 py-0 space-x-2">
+                                <Entypo name="address" size={14} color="#5c7877" />
+                                <Text className="text-[#5c7877] text-[12px]">{data?.address}</Text>
+                            </View>
+                            <TouchableOpacity className="bg-[#2bb2ae] mx-8 mt-4 h-[40px] text-center justify-center rounded-md">
+                                <Text className="text-center text-[#fff] font-bold text-[17px]">Book Now</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                    </View>
+
+
                 </ScrollView>
             }
         </SafeAreaView>
